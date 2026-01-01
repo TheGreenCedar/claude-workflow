@@ -173,7 +173,8 @@ description: What this command does
 ```
 claude-workflow/
 ├── .claude-plugin/
-│   └── plugin.json          # Plugin manifest
+│   ├── plugin.json          # Plugin manifest
+│   └── marketplace.json     # Marketplace metadata
 ├── agents/                   # 7 specialized agents
 ├── skills/                   # 6 knowledge domains
 ├── commands/                 # 4 output style commands
