@@ -20,7 +20,54 @@ Identify affected files and their corresponding test files.
 
 ## Phase 2: Spawn Verification Subagents (Parallel)
 
-Use the Task tool to spawn these subagents in parallel:
+Use the Task tool with `run_in_background: true` to spawn subagents in parallel.
+
+**CRITICAL**: Launch ALL subagents in a SINGLE message for true parallelism:
+
+```
+[All Task calls in ONE message]
+
+Task 1: {
+  description: "Syntax & Type Check",
+  prompt: "Run language-specific type checker (tsc, mypy, go vet)...",
+  run_in_background: true
+}
+
+Task 2: {
+  description: "Test Runner",
+  prompt: "Run tests for affected files first, then integration tests...",
+  run_in_background: true
+}
+
+Task 3: {
+  description: "Lint & Style Check",
+  prompt: "Run project linter (eslint, ruff, golangci-lint)...",
+  run_in_background: true
+}
+
+Task 4: {
+  description: "Security Scan",
+  prompt: "Grep for hardcoded secrets, check for vulnerabilities...",
+  run_in_background: true
+}
+
+Task 5: {
+  description: "Build Validator",
+  prompt: "Run build command, verify artifacts exist...",
+  run_in_background: true
+}
+```
+
+After all complete, use TaskOutput to retrieve each result:
+```
+TaskOutput: task_1_id
+TaskOutput: task_2_id
+TaskOutput: task_3_id
+TaskOutput: task_4_id
+TaskOutput: task_5_id
+```
+
+### Subagent Details
 
 ### Subagent 1: Syntax & Type Check
 - Run language-specific type checker (tsc, mypy, go vet)

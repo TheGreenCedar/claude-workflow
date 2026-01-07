@@ -18,7 +18,7 @@ The project-starter plugin includes 7 specialized agents that can work together:
 
 ## Available Examples
 
-### [Comprehensive Code Review](orchestration/comprehensive-code-review/)
+### [Comprehensive Code Review](orchestration/comprehensive-code-review/) (Sequential)
 
 A 6-agent sequential workflow for thorough code analysis:
 
@@ -34,6 +34,38 @@ orchestrator → code-reviewer → security-auditor → test-architect → refac
 - Test coverage recommendations
 - Refactoring suggestions
 - Documentation updates
+
+---
+
+### [Parallel Execution](orchestration/parallel-execution/) (Parallel)
+
+N-agent parallel workflow for maximum speed:
+
+```
+     Orchestrator
+          │
+    ┌─────┼─────┬─────┬─────┐
+    │     │     │     │     │
+    ▼     ▼     ▼     ▼     ▼
+ Agent  Agent Agent Agent Agent
+    │     │     │     │     │
+    └─────┴─────┴─────┴─────┘
+          │
+          ▼
+   TaskOutput (collect)
+          │
+          ▼
+     Synthesis
+```
+
+**Use when:** You have N independent tasks that can run simultaneously.
+
+**What you get:**
+- ~Nx speed improvement (N tasks in parallel)
+- Same quality as sequential execution
+- Unified synthesized results
+
+**Key Rule:** ALL Task calls MUST be in a SINGLE message for true parallelism
 
 ## How Orchestration Works
 
